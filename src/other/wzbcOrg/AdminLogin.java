@@ -1,8 +1,15 @@
+
 package other.wzbcOrg;
 
 public class AdminLogin {
 	static String adminName="",adminPassword="",adminLevel="高级管理员",orgName="温州商学院",adminOrgCount="";
-
+	 public AdminLogin(String adminName,String adminPassword,String adminLevel,String orgName,String adminOrgCount){
+	       this.adminName=adminName;
+	       this.adminLevel=adminLevel;
+	       this.adminOrgCount=adminOrgCount;
+	       this.adminPassword=adminPassword;
+	       this.orgName=orgName;
+	   }
 	public static String getAdminOrgCount() {
 		return adminOrgCount;
 	}

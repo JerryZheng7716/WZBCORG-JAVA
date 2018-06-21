@@ -7,6 +7,8 @@ import java.awt.event.ComponentEvent;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 
+import other.wzbcOrg.AdminOriginator;
+import other.wzbcOrg.LoginCaretaker;
 import other.wzbcOrg.OtherFunction;
 import other.wzbcOrg.SqlFunction;
 import other.wzbcOrg.StringUtil;
@@ -165,12 +167,18 @@ public class LoginFrame extends javax.swing.JFrame {
 			int x = JOptionPane.showConfirmDialog(null,
 					"登陆成功,是否打开商学院学生组织人事系统？", "登陆成功", JOptionPane.YES_NO_OPTION);
 			if (x == 0) {
-
-				AdminLogin.setAdminName(AdminName);
-				AdminLogin.setAdminPassword(AdminPassWord);
-				AdminLogin.setAdminLevel(AdminLevel);
-				AdminLogin.setOrgName(OrgName);
-				AdminLogin.setAdminOrgCount(AdminOrgCount);
+				AdminLogin adminLogin = new AdminLogin(AdminName,AdminPassWord,AdminLevel,OrgName,AdminOrgCount);
+		        //创建原发器对象
+		        AdminOriginator ori = new AdminOriginator(adminLogin);
+		        System.out.println(ori.getAdminLogin().getAdminLevel());
+		        //创建负责人对象，保存创建的备忘录对象
+		        LoginCaretaker.setAdminMemento(ori.createMemento());
+		        
+//				AdminLogin.setAdminName(AdminName);
+//				AdminLogin.setAdminPassword(AdminPassWord);
+//				AdminLogin.setAdminLevel(AdminLevel);
+//				AdminLogin.setOrgName(OrgName);
+//				AdminLogin.setAdminOrgCount(AdminOrgCount);
 				Main = new Main();
 				Main.setVisible(true);
 				this.dispose();

@@ -15,6 +15,8 @@ import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import other.wzbcOrg.AdminLogin;
+import other.wzbcOrg.AdminOriginator;
+import other.wzbcOrg.LoginCaretaker;
 import other.wzbcOrg.OpenSituation;
 import yhs.Frame.*;
 import zjl.Frame.DepartManage;
@@ -499,16 +501,19 @@ public class Main extends javax.swing.JFrame {
 	}
 
 	private void init() {
+		AdminOriginator ao = new AdminOriginator(null);
+		ao.restoreMemento(LoginCaretaker.getAdminMemento());
+		AdminLogin adminLogin = ao.getAdminLogin();
 		jLabel1.setFont(new java.awt.Font("微软雅黑", 0, 14));
 		jLabel1.setText("jLabel1");
 		jLabel1.setBounds(360, 330, 290, 30);
 		jLabel3.setFont(new java.awt.Font("微软雅黑", 0, 14));
-		jLabel3.setText("欢迎您  , " + AdminLogin.getAdminLevel() + "："
-				+ AdminLogin.getAdminName());
+		jLabel3.setText("欢迎您  , " + adminLogin.getAdminLevel() + "："
+				+ adminLogin.getAdminName());
 		jLabel3.setBounds(360, 270, 290, 30);
 		jLabel4.setFont(new java.awt.Font("微软雅黑", 0, 14));
-		jLabel4.setText("您所在 , " + AdminLogin.getOrgName() + ", 共有:"
-				+ AdminLogin.getAdminOrgCount() + "人");
+		jLabel4.setText("您所在 , " + adminLogin.getOrgName() + ", 共有:"
+				+ adminLogin.getAdminOrgCount() + "人");
 		jLabel4.setBounds(360, 300, 290, 30);
 	}
 
