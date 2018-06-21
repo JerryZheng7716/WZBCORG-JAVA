@@ -12,6 +12,10 @@ import com.yhs.dao.*;
 import com.yhs.helper.DateHelper;
 import com.yhs.helper.StringHelper;
 import com.yhs.model.*;
+import com.yhs.Observer.ActivityController;
+import com.yhs.Observer.ActivityObserver;
+import com.yhs.Observer.Controller;
+import com.yhs.Observer.Observer;
 
 /*
  * ActivityManager.java
@@ -26,6 +30,9 @@ import com.yhs.model.*;
 public class ActivityManager extends javax.swing.JInternalFrame {
 	private ActivityDao activityDao = new ActivityDao();
 	private OrganizationDao organizationDao = new OrganizationDao();
+	private Controller activityController;
+	private Observer activityObserver;
+	private Activity activity;
 
 	private String AdminOrgName = AdminLogin.getOrgName();
 
@@ -42,11 +49,15 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 			this.jComboBoxSearchOrgName.addItem(organization);
 			jComboBoxSearchOrgName.setEnabled(false);
 		}
-
-		
 		fillOrgName("Details");
-		String[] psString = {};
-		fillTable(new Activity(), psString);
+
+		activity = new Activity("", "", "", "");
+		activityController = new ActivityController(activity);
+		activityObserver = new ActivityObserver(
+				((ActivityController) activityController).getActivity(),
+				jTable1, activityDao);
+		activityController.addObserver(activityObserver);
+		activityController.notifyUpdate();
 	}
 
 	// 下拉框
@@ -73,7 +84,7 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 	}
 
 	// 填充表格
-	private void fillTable(Activity activity1, String[] psString) {
+	private void fillTable(String[] psString) {
 		DefaultTableModel dtm = (DefaultTableModel) jTable1.getModel();
 		dtm.setRowCount(0);
 
@@ -132,14 +143,15 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 		String searchActivityName = jTextFieldSearchActivityName.getText() + "";
 		String searchActivityPlace = jTextFieldSearchActivityPlace.getText()
 				+ "";
-		Organization organization = (Organization) this.jComboBoxSearchOrgName.getSelectedItem();
-//		if (AdminOrgName == "温州商学院") {
-//			organization = (Organization) this.jComboBoxSearchOrgName
-//					.getSelectedItem();
-//		} else {
-//			organization = new Organization();
-//			organization.setOrgName(AdminOrgName);
-//		}
+		Organization organization = (Organization) this.jComboBoxSearchOrgName
+				.getSelectedItem();
+		// if (AdminOrgName == "温州商学院") {
+		// organization = (Organization) this.jComboBoxSearchOrgName
+		// .getSelectedItem();
+		// } else {
+		// organization = new Organization();
+		// organization.setOrgName(AdminOrgName);
+		// }
 
 		if ("请选择".equals(organization.getOrgName())) {
 			organization.setOrgName("");
@@ -156,18 +168,31 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 			if (!DateHelper.valiDateTimeWithLongFormat(searchActivityTime)) {
 				JOptionPane.showMessageDialog(null, "时间格式不正确，请按照YYYY-MM-dd填写");
 				return;
-			} else {
-				String[] psString = { searchActivityName, searchActivityPlace,
-						searchActivityTime, organization.getOrgName() };
-				fillTable(new Activity(), psString);
-				fillOrgName("Search");
 			}
-		} else {
-			String[] psString = { searchActivityName, searchActivityPlace,
-					organization.getOrgName() };
-			fillTable(new Activity(), psString);
-			fillOrgName("Search");
+			// else {
+			// String[] psString = { searchActivityName, searchActivityPlace,
+			// searchActivityTime, organization.getOrgName() };
+			// fillTable(psString);
+			// activity = new Activity(searchActivityName, searchActivityPlace,
+			// searchActivityTime, organization.getOrgName());
+			// ((ActivityObserver) activityObserver).setActivity(activity);
+			// activityController.notifyUpdate();
+			// fillOrgName("Search");
+			// System.out.println("11111111111111111111111111111111");
+			// }
 		}
+		// else {
+		// String[] psString = { searchActivityName, searchActivityPlace,
+		// organization.getOrgName() };
+		// fillTable(psString);
+		// fillOrgName("Search");
+		// }
+
+		activity = new Activity(searchActivityName, searchActivityPlace,
+				searchActivityTime, organization.getOrgName());
+		((ActivityObserver) activityObserver).setActivity(activity);
+		activityController.notifyUpdate();
+		fillOrgName("Search");
 	}
 
 	// 删除按钮事件
@@ -196,7 +221,7 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 				e.printStackTrace();
 			} finally {
 				String[] psString = {};
-				fillTable(new Activity(), psString);
+				fillTable(psString);
 			}
 		} else {
 			return;
@@ -250,7 +275,7 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 			e.printStackTrace();
 		} finally {
 			String[] psString = {};
-			fillTable(new Activity(), psString);
+			fillTable(psString);
 		}
 	}
 
@@ -296,7 +321,7 @@ public class ActivityManager extends javax.swing.JInternalFrame {
 			e.printStackTrace();
 		} finally {
 			String[] psString = {};
-			fillTable(new Activity(), psString);
+			fillTable(psString);
 		}
 	}
 

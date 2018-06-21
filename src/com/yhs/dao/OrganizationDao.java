@@ -105,7 +105,7 @@ public class OrganizationDao {
 				}
 			}
 
-			System.out.println(sql);
+			// System.out.println(sql);
 			PreparedStatement pstmt = con.prepareStatement(sql);
 			ResultSet rs = pstmt.executeQuery();
 			Organization org1 = null;
