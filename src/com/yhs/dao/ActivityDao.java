@@ -112,72 +112,10 @@ public class ActivityDao {
 			String[] psString1 = {};
 			rs = sqlFunction.doSqlSelect(sql, psString1, false);
 		}
-		// System.out.println(sql);
+		System.out.println(sql);
 		List<Activity> listActivity = new ArrayList<Activity>();
+		// TODO
 		Activity tempActivity = null;
-		try {
-			while (rs.next()) {
-				tempActivity = new Activity();
-				tempActivity.setActivityID(rs.getInt("ActivityID"));
-				// System.out.println(rs.getInt("ActivityID"));
-				tempActivity.setActivityName(rs.getString("ActivityName"));
-				tempActivity.setActivityPlace(rs.getString("ActivityPlace"));
-				tempActivity.setActivityTime(rs.getString("ActivityTime"));
-				tempActivity.setOrgName(rs.getString("OrgName"));
-				tempActivity.setActivityPs(rs.getString("ActivityPs"));
-				if (rs.getString("ActivityPs") == null) {
-					tempActivity.setActivityPs("");
-				} else {
-					// System.out.println(rs.getString("ActivityPs"));
-				}
-				// System.out.println(tempActivity.getActivityPs());
-				listActivity.add(tempActivity);
-			}
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		sqlFunction.closeAllLink();
-		return listActivity;
-	}
-
-	public List<Activity> listWithList(List<String> ss) {
-		String sql = null;
-		ResultSet rs = null;
-		List<Activity> listActivity = new ArrayList<Activity>();
-		Activity tempActivity = null;
-
-		if (ss.size() == 0) {
-			sql = "select * from tb_activity";
-			if (!AdminOrgName.equals("温州商学院")) {
-				sql += " Where OrgName = '" + AdminOrgName + "'";
-			}
-			String[] psString1 = {};
-			rs = sqlFunction.doSqlSelect(sql, psString1, false);
-		} else if (ss.size() == 2) {
-			sql = "select * from tb_activity where ActivityID like ? and ActivityName like ?";
-
-			if (!AdminOrgName.equals("温州商学院")) {
-				sql += " and OrgName = '" + AdminOrgName + "'";
-			}
-			String[] psString = { ss.get(0), ss.get(1) };
-			rs = sqlFunction.doSqlSelect(sql, psString, true);
-		} else if (ss.size() == 3) {
-			sql = "select * from tb_activity where ActivityName like ? and ActivityPlace like ? and OrgName like ?";
-			if (!AdminOrgName.equals("温州商学院")) {
-				sql += " and OrgName = '" + AdminOrgName + "'";
-			}
-			String[] psString = { ss.get(0), ss.get(1), ss.get(2) };
-			rs = sqlFunction.doSqlSelect(sql, psString, true);
-		} else {
-			String[] newPsString = { ss.get(0), ss.get(1), ss.get(3) };
-			sql = "select * from tb_activity where ActivityName like ? and ActivityPlace like ? and ActivityTime = '"
-					+ ss.get(2) + "' and OrgName like ?";
-			if (!AdminOrgName.equals("温州商学院")) {
-				sql += " and OrgName = '" + AdminOrgName + "'";
-			}
-			rs = sqlFunction.doSqlSelect(sql, newPsString, true);
-		}
-
 		try {
 			while (rs.next()) {
 				tempActivity = new Activity();

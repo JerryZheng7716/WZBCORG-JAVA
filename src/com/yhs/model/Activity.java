@@ -86,12 +86,4 @@ public class Activity {
 		ActivityID = activityID;
 	}
 
-	public Activity(String activityName, String activityPlace,
-			String activityTime, String orgName) {
-		super();
-		ActivityName = activityName;
-		ActivityPlace = activityPlace;
-		ActivityTime = activityTime;
-		OrgName = orgName;
-	}
 }
