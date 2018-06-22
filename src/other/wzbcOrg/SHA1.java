@@ -2,7 +2,7 @@ package other.wzbcOrg;
 
 import java.security.MessageDigest;  
 
-public final class SHA1 {  
+public  class SHA1 {  
   
     private static final char[] HEX_DIGITS = {'0', '1', '2', '3', '4', '5',  
                            '6', '7', '8', '9', 'a', 'b', 'c', 'd', 'e', 'f'};  
@@ -13,7 +13,7 @@ public final class SHA1 {
      * @param bytes the raw bytes from the digest. 
      * @return the formatted bytes. 
      */  
-    private static String getFormattedText(byte[] bytes) {  
+    public  String getFormattedText(byte[] bytes) {  
         int len = bytes.length;  
         StringBuilder buf = new StringBuilder(len * 2);  
         // 把密文转换成十六进制的字符串形式  
@@ -24,7 +24,7 @@ public final class SHA1 {
         return buf.toString();  
     }  
   
-    public static String encode(String str) {  //将明文转换为SHA1密文
+    public  String encode(String str) {  //将明文转换为SHA1密文
         if (str == null) {  
             return null;  
         }  

@@ -72,7 +72,13 @@ public class OtherFunction {
 		if (StringUtil.isEmpty(AdminName) || StringUtil.isEmpty(AdminPassWord)) {
 			JOptionPane.showMessageDialog(null, "用户名或密码不能为空！");
 		} else {
-			AdminPassWord=SHA1.encode(AdminPassWord);
+//			Base64 base64=new Base64();
+//			AdminPassWord = base64.encode(AdminPassWord);
+	        SHA1 sha1=new SHA1();
+	        Adapte_SHA1 adapte_new = new Adapte_SHA1(sha1);
+	        AdminPassWord = adapte_new.encode(AdminPassWord);
+
+//			AdminPassWord=SHA1.encode(AdminPassWord);
 			String sqlLanguage = "SELECT * FROM tb_admin WHERE AdminName=? and AdminPassWord=?";
 			String[] psString = { AdminName, AdminPassWord };
 			ResultSet resultSet=null;

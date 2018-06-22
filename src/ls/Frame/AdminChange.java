@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import com.sun.org.apache.bcel.internal.generic.NEW;
 
+import other.wzbcOrg.Adapte_SHA1;
 import other.wzbcOrg.AdminLogin;
 import other.wzbcOrg.OpenSituation;
 import other.wzbcOrg.SHA1;
@@ -334,7 +335,14 @@ public class AdminChange extends javax.swing.JInternalFrame {
 				JOptionPane.showMessageDialog(null, "已经存在当前用户名！");
 			} else {
 				if (jPasswordField1.getText().equals(jPasswordField2.getText())) {
-					adminPassword = SHA1.encode(jPasswordField1.getText());
+//					Base64 base64=new Base64();
+//			        adminPassword = base64.encode(jPasswordField1.getText());
+			        SHA1 sha1=new SHA1();
+			        Adapte_SHA1 adapte_new = new Adapte_SHA1(sha1);
+			        adminPassword = adapte_new.encode(jPasswordField1.getText());
+					
+					
+//					adminPassword = SHA1.encode(jPasswordField1.getText());
 					String sqlLanguage = "UPDATE tb_admin SET AdminName=?,AdminPassword=? where AdminName=?";
 					System.out.println();
 					String[] psString = { adminName, adminPassword,

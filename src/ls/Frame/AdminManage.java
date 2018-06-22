@@ -1,6 +1,8 @@
 package ls.Frame;
 import java.sql.SQLException;
 import javax.swing.JOptionPane;
+
+import other.wzbcOrg.Adapte_SHA1;
 import other.wzbcOrg.AdminLogin;
 import other.wzbcOrg.OpenSituation;
 import other.wzbcOrg.OtherFunction;
@@ -590,7 +592,16 @@ public class AdminManage extends javax.swing.JInternalFrame {
 			JOptionPane.showMessageDialog(null, "两次密码输入不一致!!");
 			return null;
 		}
-		adminPassword = SHA1.encode(adminPassword);
+	//		进行Base64加密
+	//	Base64 base64=new Base64();
+	//	adminPassword = base64.encode(adminPassword);
+		//进行SHA1加密
+	    SHA1 sha1=new SHA1();
+	    Adapte_SHA1 adapte_new = new Adapte_SHA1(sha1);
+	    adminPassword = adapte_new.encode(adminPassword);
+		
+		
+	//	adminPassword = SHA1.encode(adminPassword);
 		adminLevel = jComboBox1.getSelectedItem().toString();
 		if (!AdminLogin.getAdminLevel().equals("高级管理员")&&adminLevel.equals("高级管理员")) {
 			JOptionPane.showMessageDialog(null, "权限越级!您没有权限添加或修改为“高级管理员”");
